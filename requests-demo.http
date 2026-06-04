@@ -1,0 +1,29 @@
+### Health
+GET http://localhost:8000/health
+
+### Recommend an upgrade
+POST http://localhost:8000/api/v1/recommendations
+Content-Type: application/json
+
+{
+  "metrics": {
+    "resource_id": "db-prod-1", "resource_type": "database",
+    "current_version": "14.2", "target_version": "15.4",
+    "criticality": "HIGH", "error_rate": 0.08, "cpu_p95": 85, "open_incidents": 1,
+    "days_since_last_upgrade": 420,
+    "hourly_usage": [
+      {"hour": 0, "utilization": 20}, {"hour": 3, "utilization": 5},
+      {"hour": 4, "utilization": 6}, {"hour": 12, "utilization": 90}
+    ]
+  },
+  "explain_verbose": true
+}
+
+### List pending human reviews
+GET http://localhost:8000/api/v1/recommendations/reviews/pending
+
+### Approve / reject a recommendation
+POST http://localhost:8000/api/v1/recommendations/<REC_ID>/review
+Content-Type: application/json
+
+{ "reviewer": "sre-oncall", "approved": true, "note": "canary plan looks good" }

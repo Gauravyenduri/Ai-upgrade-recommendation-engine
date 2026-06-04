@@ -1,0 +1,12 @@
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: sqlite:////app/data/recommendations.db
+      LLM_ENABLED: "false"   # set true + OPENAI_API_KEY to enable narratives
+    volumes:
+      - data:/app/data
+volumes:
+  data:
